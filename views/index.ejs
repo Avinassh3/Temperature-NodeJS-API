@@ -1,0 +1,65 @@
+<html>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<body>
+
+<div class="container">                      
+    
+        <form class="form-inline" method="post" action="weather">
+            <input type="hidden" id="latlong" name="latlon">
+    <h4>Want to know temperature in your loaction </h4>
+    <button type='submit' class="btn btn-primary">Click Here</button>
+    </form>
+</div>
+
+
+
+
+
+
+<% if( typeof Temp != 'undefined') { %>
+<div class="container">
+        <div class="row">
+          <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+            <div class="card card-signin my-5">
+              <div class="card-body">
+                <h4 class="card-title text-center">Current Temperature </h4>
+                <h5>weather type    : <%= weather[0].description %> </h5>
+                <h5>Current Temperature    : <%= Temp %> </h5>
+                <h5>Todays Min Temperature : <%= TempMin %> </h5>
+                <h5>Todays Max Temperature : <%= TempMax %> </h5>
+                <h5>Your City              : <%= City %> </h5>
+                <h5>Your Country Code      : <%= Country %> </h5>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <% } %>
+      
+
+
+
+
+
+
+
+
+
+
+
+<script>
+    onload=getLocation();
+var x = document.getElementById("latlong");
+function getLocation() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(showPosition);
+  } else { 
+    x.innerHTML = "Geolocation is not supported by this browser.";
+  }
+}
+function showPosition(position) {
+    document.getElementById("latlong").value=position.coords.latitude + "," + position.coords.longitude;
+}
+</script>
+</body>
+</html>
