@@ -14,10 +14,17 @@ const port=process.env.PORT||3000;
 app.set("views",path.join(__dirname,'views'));
 app.set("view engine",'ejs')
 
+app.use(express.static(__dirname+'/views'))
 
 app.get('/',(req,res)=>{
     res.render('index');
 })
+
+app.get('/weather',(req,res)=>{
+    res.render('index');
+})
+
+
 
 app.post('/weather', async  (req,res)=>{
 
@@ -29,9 +36,10 @@ const lon=latlon[1];
 const fetch_response=  await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=0a8fb83cf8f3996326cbdd4809997d6c`)
 const json= await fetch_response.json();
 
-const temp=parseFloat(json.main.temp)-273.15;
-const tempmin=parseFloat(json.main.temp_min)-273.15;
-const tempmax=parseFloat(json.main.temp_max)-273.15;
+
+const temp=(parseFloat(json.main.temp)-273.15).toFixed(2);
+const tempmin=(parseFloat(json.main.temp_min)-273.15).toFixed(2);
+const tempmax=(parseFloat(json.main.temp_max)-273.15).toFixed(2);
 console.log(json.weather[0].description);
  //temp=temp.toString();
 const reply={

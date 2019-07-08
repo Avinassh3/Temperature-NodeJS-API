@@ -1,65 +1,101 @@
+<!--Author: W3layouts
+Author URL: http://w3layouts.com
+License: Creative Commons Attribution 3.0 Unported
+License URL: http://creativecommons.org/licenses/by/3.0/
+-->
+<!DOCTYPE HTML>
 <html>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-<body>
+<head>
+<title>Find Weather in Your Area</title>
+<!-- Custom Theme files -->
+<link href="css/style.css" rel="stylesheet" type="text/css" media="all"/>
+<!-- for-mobile-apps -->
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
+<meta name="keywords" content="Find Weather in Your Area using NodeJs by AVINASSH BHARADHWAJ" />
+<!-- //for-mobile-apps -->
 
-<div class="container">                      
-    
-        <form class="form-inline" method="post" action="weather">
-            <input type="hidden" id="latlong" name="latlon">
-    <h4>Want to know temperature in your loaction </h4>
-    <button type='submit' class="btn btn-primary">Click Here</button>
-    </form>
-</div>
-
-
-
-
-
-
-<% if( typeof Temp != 'undefined') { %>
-<div class="container">
-        <div class="row">
-          <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
-            <div class="card card-signin my-5">
-              <div class="card-body">
-                <h4 class="card-title text-center">Current Temperature </h4>
-                <h5>weather type    : <%= weather[0].description %> </h5>
-                <h5>Current Temperature    : <%= Temp %> </h5>
-                <h5>Todays Min Temperature : <%= TempMin %> </h5>
-                <h5>Todays Max Temperature : <%= TempMax %> </h5>
-                <h5>Your City              : <%= City %> </h5>
-                <h5>Your Country Code      : <%= Country %> </h5>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <% } %>
-      
-
-
-
-
-
-
-
-
-
-
-
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 <script>
-    onload=getLocation();
-var x = document.getElementById("latlong");
-function getLocation() {
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(showPosition);
-  } else { 
-    x.innerHTML = "Geolocation is not supported by this browser.";
-  }
-}
-function showPosition(position) {
-    document.getElementById("latlong").value=position.coords.latitude + "," + position.coords.longitude;
-}
+		onload=getLocation();
+		var x = document.getElementById("latlong");
+		function getLocation() {
+		  if (navigator.geolocation) {
+			navigator.geolocation.getCurrentPosition(showPosition);
+		  } else { 
+			alert("Location permisson needed");
+			//window.location.reload();
+			document.getElementById("latlong").value="17.3850" + "," + "78.4867";
+			x.innerHTML = "Geolocation is not supported by this browser.";
+		  }
+		}
+		function showPosition(position) {
+			document.getElementById("latlong").value=position.coords.latitude + "," + position.coords.longitude;
+		}
 </script>
+
+
+</head>
+<body>
+<!--widget start here-->
+<% if( typeof Temp != 'undefined') { %>
+<div class="widget">
+	<div class="wrap">
+		<div class="widget-main">
+		   <div class="widget-climate-wthree">
+				<div class="widget-left">
+						<div class="season">
+								<div class="degree">
+									<h4>Present Temperature</h4>
+									<h3><%= Temp %></h3>
+								</div>
+							   <div class="clear"> </div>
+							</div>
+					<div class="season">
+						<div class="degree">
+							<h4>Temperature Min</h4>
+							<h3><%= TempMin %></h3>
+						</div>
+					   <div class="clear"> </div>
+					</div>
+					<div class="season">
+							<div class="degree">
+								<h4>Temperature Max</h4>
+								<h3><%= TempMax %></h3>
+							</div>
+						   <div class="clear"> </div>
+						</div>					
+				</div>		
+				<div class="widget-right w3l">
+					<h5 id="day"></h5>
+					<h5><%= weather[0].description %></h5> 
+					<h5><%= City %></h5>              
+				</div>
+			 <div class="clear"> </div>				
+		  </div>
+		</div>
+	</div>
+</div>
+<% } %>
+	<center>
+	<form  method="post" action="weather">
+			<input type="hidden" id="latlong" name="latlon">
+	<button type='submit' class="btn btn-primary">Get Temperature</button>
+	</form>
+</center>
+<!--wedget end here-->
+<!--copy rights end here-->
+<!--copyrights start here-->
 </body>
+<script>
+	var today = new Date();
+	var date =  today.getDate()+'/'+(today.getMonth()+1)+'/'+today.getFullYear();
+	var day=today.getDay();
+	var words=['Sunday','Monday','Tuesday','Thursday','Friday','Saturday']
+	document.getElementById("day").innerHTML=date+" "+words[day];
+	//document.getElementById("date").innerHTML=words[day];
+
+</script>
+
 </html>
